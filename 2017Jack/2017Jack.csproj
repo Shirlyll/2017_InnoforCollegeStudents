@@ -76,7 +76,6 @@
     <Content Include="packages.config" />
     <Content Include="Webpage\editPage.aspx" />
     <Content Include="Webpage\errorPage.aspx" />
-    <Content Include="Webpage\test.aspx" />
     <Content Include="Webpage\weui.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -125,10 +124,6 @@
     </Compile>
     <Compile Include="Webpage\store.aspx.cs">
       <DependentUpon>store.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Webpage\test.aspx.cs">
-      <DependentUpon>test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Webpage\weui.aspx.cs">
