@@ -71,12 +71,14 @@
     <Content Include="javascript\example.js" />
     <Content Include="javascript\JavaScript.js" />
     <Content Include="javascript\jquery-3.2.1.js" />
+    <Content Include="javascript\jquery-weui.min.js" />
     <Content Include="javascript\jquery.cookie.js" />
     <Content Include="javascript\jquery.validate.js" />
+    <Content Include="javascript\jweixin-1.0.0.js" />
+    <Content Include="javascript\zepto.min.js" />
     <Content Include="packages.config" />
     <Content Include="Webpage\editPage.aspx" />
     <Content Include="Webpage\errorPage.aspx" />
-    <Content Include="Webpage\weui.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -124,10 +126,6 @@
     </Compile>
     <Compile Include="Webpage\store.aspx.cs">
       <DependentUpon>store.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Webpage\weui.aspx.cs">
-      <DependentUpon>weui.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
