@@ -82,11 +82,10 @@ namespace _2017Jack.Webpage
                 string userId = Session["WX_UserAccount"].ToString();
                 Connection connection = new Connection();
                 ArrayList records = connection.dataAddress("select * from td_Jack where id = '" + JackId + "' and userId = '" + userId + "'and available = 1");
-                Dictionary<string, string> result = new Dictionary<string, string>();
                 EntityList JackList = new EntityList();
                 foreach (Dictionary<string, string> record in records)
                 {
-                    result = record as Dictionary<string, string>;
+                    Dictionary<string, string> result = record;
                     JackEntity Jack_entity = new JackEntity();
                     Jack_entity.id = result["id"];
                     Jack_entity.JackName = result["JackName"];
@@ -96,24 +95,32 @@ namespace _2017Jack.Webpage
                     Jack_entity.IsWaiting = result["IsWaiting"];
                     JackList.entitylist.Add(Jack_entity);
                     //查看workstate的值是否已到转换后的时间
-                    if(Jack_entity.IsWaiting=="1")
+                    if (Jack_entity.IsWaiting == "1")
                     {
                         Connection connection2 = new Connection();
-                        ArrayList list = connection2.dataAddress("select operateTime from td_operateRecords where id = (select max(id) from td_operateRecords where userId = '"+userId+"'and JackId = '"+Jack_entity.id+"');");
+                        ArrayList list = connection2.dataAddress("select operateTime from td_operateRecords where id = (select max(id) from td_operateRecords where userId = '" + userId + "'and JackId = '" + Jack_entity.id + "');");
                         //保持原来的等待状态
                         if (string.Compare(Jack_entity.operateTime, DateTime.Now.ToString()) == 1)
                         {
-                            Jack_entity.operateTime = list[0].ToString();
-                        }
-                        else//改变工作状态
-                        {
                             Jack_entity.IsWaiting = "0";
-                            if(Jack_entity.WorkState == "1")
+                            if (Jack_entity.WorkState == "1")
                             { Jack_entity.WorkState = "0"; }
                             else
                             { Jack_entity.WorkState = "1"; }
                         }
+                        else//改变工作状态
+                        {
+                            foreach (Dictionary<string, string> operateRecord in list)
+                            {
+                                Jack_entity.operateTime = operateRecord["operateTime"];
+                            }
+                        }
                     }
+                    else
+                    {
+                        Jack_entity.operateTime ="0";
+                    }
+
 
                 }
                 //查看workstate的值是否已到转换后的时间
@@ -129,8 +136,8 @@ namespace _2017Jack.Webpage
                     ShowJackInforRecords.Append("JackName:'" + Jack_entity.JackName + "',");
                     ShowJackInforRecords.Append("LinkState:'" + Jack_entity.LinkState + "',");
                     ShowJackInforRecords.Append("WorkState:'" + Jack_entity.WorkState + "',");
-                    ShowJackInforRecords.Append("IsWaiting:" + Jack_entity.IsWaiting + "',");
-                    ShowJackInforRecords.Append("operateTime:" + Jack_entity.operateTime + "'");
+                    ShowJackInforRecords.Append("IsWaiting:'" + Jack_entity.IsWaiting + "',");
+                    ShowJackInforRecords.Append("operateTime:'" + Jack_entity.operateTime + "'");
                     ShowJackInforRecords.Append("},");
                 }
                 ShowJackInforRecords.Append("]").Replace(",]", "]");
@@ -166,13 +173,13 @@ namespace _2017Jack.Webpage
                     if (WorkState == "1")
                     {
                         Connection connection = new Connection();
-                        connection.dataAddress("update td_Jack set WorkState='0' where id ='" + JackId + "'and userId='" + userId + "'");
+                        connection.dataAddress("update td_Jack set WorkState='0' where id ='" + JackId + "'and userId='" + userId + "' and IsWaiting='0'");
 
                     }
                     else
                     {
                         Connection connection = new Connection();
-                        connection.dataAddress("update td_Jack set WorkState='1' where id ='" + JackId + "'and userId='" + userId + "'");
+                        connection.dataAddress("update td_Jack set WorkState='1' where id ='" + JackId + "'and userId='" + userId + "' and IsWaiting='0'");
 
                     }
                     //修改Records表
@@ -192,7 +199,7 @@ namespace _2017Jack.Webpage
                     string operateTime = DateTime.Now.AddMinutes(30).ToString();
                     Connection connection = new Connection();
                     connection.dataAddress("insert into td_OperateRecords values(1,'" + userId + "','" + JackId + "','" + submitTime + "','" + operateTime + "')");
-                    connection.dataAddress("update td_Jack set WorkState='2' where id ='" + JackId + "'and userId='" + userId + "'");
+                    connection.dataAddress("update td_Jack set WorkState='"+WorkState+"' where id ='" + JackId + "'and userId='" + userId + "' and IsWaiting='1'");
 
                 }
 

@@ -79,6 +79,7 @@
             });
             //get the jackinfor by id
             $.get("./jackPage.aspx", { "action": "showJackInfor", "JackId": JackId }, function (resultString) {
+                //alert(ShowJackInforRecord.operateTime)
                 var resultJson = eval('(' + resultString + ')');
                 if (resultJson.errcode == "0") {
                     var ShowJackInforArray = resultJson.ShowJackInforRecords;
