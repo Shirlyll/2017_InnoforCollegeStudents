@@ -102,7 +102,13 @@
                         }
                         if (ShowJackInforRecord.IsWaiting == "1")
                         {
+                            $("#IsWaiting").html("已预约");
                             $("#operateTime").html(ShowJackInforRecord.operateTime);
+                        }
+                        if (ShowJackInforRecord.IsWaiting == "0")
+                        {
+                            $("#IsWaiting").html("未预约");
+                            $("#operateTime").html("");
                         }
                     });
                 }
@@ -158,7 +164,12 @@
                  <div class="weui-cells__tips weui-cell__ft weui-label" id="WorkState"></div>
              </div>
             <div class="weui-cell">
-                 <div class="weui-cell__hd" >预定转换时间</div>
+                <div class="weui-cell__hd">预约状态</div>
+                <div class="weui-cells__tips weui-cell__ft weui-label" id="IsWaiting"></div>
+            </div>
+
+            <div class="weui-cell">
+                 <div class="weui-cell__hd" >最近预定转换时间</div>
                  <div class="weui-cells__tips weui-cell__ft weui-label" id="operateTime"></div>
              </div> 
             <!--JackId 藏在这里-->

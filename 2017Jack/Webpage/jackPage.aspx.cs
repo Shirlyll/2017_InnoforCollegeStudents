@@ -173,13 +173,13 @@ namespace _2017Jack.Webpage
                     if (WorkState == "1")
                     {
                         Connection connection = new Connection();
-                        connection.dataAddress("update td_Jack set WorkState='0' where id ='" + JackId + "'and userId='" + userId + "' and IsWaiting='0'");
+                        connection.dataAddress("update td_Jack set WorkState='0', IsWaiting='0' where id ='" + JackId + "'and userId='" + userId + "'");
 
                     }
                     else
                     {
                         Connection connection = new Connection();
-                        connection.dataAddress("update td_Jack set WorkState='1' where id ='" + JackId + "'and userId='" + userId + "' and IsWaiting='0'");
+                        connection.dataAddress("update td_Jack set WorkState='1',IsWaiting='0' where id ='" + JackId + "'and userId='" + userId + "'");
 
                     }
                     //修改Records表
@@ -199,7 +199,7 @@ namespace _2017Jack.Webpage
                     string operateTime = DateTime.Now.AddMinutes(30).ToString();
                     Connection connection = new Connection();
                     connection.dataAddress("insert into td_OperateRecords values(1,'" + userId + "','" + JackId + "','" + submitTime + "','" + operateTime + "')");
-                    connection.dataAddress("update td_Jack set WorkState='"+WorkState+"' where id ='" + JackId + "'and userId='" + userId + "' and IsWaiting='1'");
+                    connection.dataAddress("update td_Jack set WorkState='"+WorkState+"', IsWaiting='1' where id ='" + JackId + "'and userId='" + userId + "'");
 
                 }
 
